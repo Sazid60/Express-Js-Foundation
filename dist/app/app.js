@@ -10,6 +10,18 @@ app.use(express_1.default.json());
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+// Understanding of params
+app.get("/:userId/:subId", (req, res) => {
+    console.log(req.params);
+    // output
+    //   Example app listening on port 3000
+    // { userId: '56' }
+    console.log(req.params.userId);
+    // output 56
+    //  for subId it will show output as { userId: '56', subId: '45' }
+    console.log(req.params.subId);
+    res.send("Hello For Prams");
+});
 app.post("/", (req, res) => {
     // res.send("Got a POST request");
     console.log(req.body);

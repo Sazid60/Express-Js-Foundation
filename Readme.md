@@ -100,3 +100,26 @@ app.post("/", (req: Request, res: Response) => {
 
 export default app;
 ```
+
+## Middleware in Express.js
+
+- One is request.param \_(If required to search by dynamic param)
+
+```ts
+// Understanding of params
+app.get("/:userId/:subId", (req: Request, res: Response) => {
+  console.log(req.params);
+  // output
+  //   Example app listening on port 3000
+  // { userId: '56' }
+  console.log(req.params.userId);
+  // output 56
+
+  //  for subId it will show output as { userId: '56', subId: '45' }
+  console.log(req.params.subId);
+
+  res.send("Hello For Prams");
+});
+```
+
+- one is Request.query
