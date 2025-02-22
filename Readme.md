@@ -106,6 +106,7 @@ export default app;
 - One is request.param \_(If required to search by dynamic param)
 
 ```ts
+// api end point http://localhost:3000/56/45
 // Understanding of params
 app.get("/:userId/:subId", (req: Request, res: Response) => {
   console.log(req.params);

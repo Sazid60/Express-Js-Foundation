@@ -7,10 +7,11 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 // parsers
 app.use(express_1.default.json());
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+// app.get("/", (req: Request, res: Response) => {
+//   res.send("Hello World!");
+// });
 // Understanding of params
+// api end point http://localhost:3000/56/45
 app.get("/:userId/:subId", (req, res) => {
     console.log(req.params);
     // output
@@ -21,6 +22,17 @@ app.get("/:userId/:subId", (req, res) => {
     //  for subId it will show output as { userId: '56', subId: '45' }
     console.log(req.params.subId);
     res.send("Hello For Prams");
+});
+// Understanding of query
+// api end point http://localhost:3000?email=sazid@gmail.com
+// api end point http://localhost:3000?email=sazid@gmail.com&name=sazid
+app.get("/", (req, res) => {
+    console.log(req.query);
+    // output { email: 'sazid@gmail.com' }
+    // { email: 'sazid@gmail.com', name: 'sazid' }
+    console.log(req.query.email);
+    // output sazid@gmail.com
+    res.send("Hello For Query");
 });
 app.post("/", (req, res) => {
     // res.send("Got a POST request");
