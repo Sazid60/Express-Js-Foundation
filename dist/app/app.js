@@ -7,12 +7,17 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 // parsers
 app.use(express_1.default.json());
+// middleware
+const logger = (req, res, next) => {
+    console.log(req.url, req.method, req.hostname);
+    next();
+};
 // app.get("/", (req: Request, res: Response) => {
 //   res.send("Hello World!");
 // });
 // Understanding of params
 // api end point http://localhost:3000/56/45
-app.get("/:userId/:subId", (req, res) => {
+app.get("/:userId/:subId", logger, (req, res) => {
     console.log(req.params);
     // output
     //   Example app listening on port 3000
@@ -26,7 +31,7 @@ app.get("/:userId/:subId", (req, res) => {
 // Understanding of query
 // api end point http://localhost:3000?email=sazid@gmail.com
 // api end point http://localhost:3000?email=sazid@gmail.com&name=sazid
-app.get("/", (req, res) => {
+app.get("/", logger, (req, res) => {
     console.log(req.query);
     // output { email: 'sazid@gmail.com' }
     // { email: 'sazid@gmail.com', name: 'sazid' }
@@ -34,7 +39,7 @@ app.get("/", (req, res) => {
     // output sazid@gmail.com
     res.send("Hello For Query");
 });
-app.post("/", (req, res) => {
+app.post("/", logger, (req, res) => {
     // res.send("Got a POST request");
     console.log(req.body);
     // this will log undefined so we have to use parser

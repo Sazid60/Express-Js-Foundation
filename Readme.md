@@ -124,3 +124,46 @@ app.get("/:userId/:subId", (req: Request, res: Response) => {
 ```
 
 - one is Request.query
+
+```ts
+// Understanding of query
+// api end point http://localhost:3000?email=sazid@gmail.com
+// api end point http://localhost:3000?email=sazid@gmail.com&name=sazid
+app.get("/", (req: Request, res: Response) => {
+  console.log(req.query);
+
+  // output { email: 'sazid@gmail.com' }
+  // { email: 'sazid@gmail.com', name: 'sazid' }
+  console.log(req.query.email);
+  // output sazid@gmail.com
+  res.send("Hello For Query");
+});
+```
+
+## Middleware
+
+- Middleware is software that acts as an intermediary between applications, services, or components in a computing environment. It facilitates communication, data exchange, and integration between different systems, often providing additional functionalities such as authentication, logging, and request processing.
+- It Works as middle man.
+- It Takes Request and do different thing with the requests as a middleman (checking, attaching something to the request or any thing we want). it can pass to the next middleware. this pass is done using next(). passing next and next it ends up in the controller. controller function means the call back function which sends response.
+
+![alt text](image-1.png)
+
+- Response pathanor age request ashar pore request niye kaj kore
+- Middleware is basically used for authentication purpose
+
+```ts
+const logger = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.url, req.method, req.hostname);
+  next();
+};
+
+app.get("/:userId/:subId", logger, (req: Request, res: Response) => {
+  console.log(req.params);
+
+  console.log(req.params.userId);
+
+  console.log(req.params.subId);
+
+  res.send("Hello For Prams");
+});
+```

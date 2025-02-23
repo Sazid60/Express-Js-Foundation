@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 
 const app = express();
 
@@ -6,13 +6,19 @@ const app = express();
 
 app.use(express.json());
 
+// middleware
+const logger = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.url, req.method, req.hostname);
+  next();
+};
+
 // app.get("/", (req: Request, res: Response) => {
 //   res.send("Hello World!");
 // });
 
 // Understanding of params
 // api end point http://localhost:3000/56/45
-app.get("/:userId/:subId", (req: Request, res: Response) => {
+app.get("/:userId/:subId", logger, (req: Request, res: Response) => {
   console.log(req.params);
   // output
   //   Example app listening on port 3000
@@ -28,7 +34,7 @@ app.get("/:userId/:subId", (req: Request, res: Response) => {
 // Understanding of query
 // api end point http://localhost:3000?email=sazid@gmail.com
 // api end point http://localhost:3000?email=sazid@gmail.com&name=sazid
-app.get("/", (req: Request, res: Response) => {
+app.get("/", logger, (req: Request, res: Response) => {
   console.log(req.query);
   // output { email: 'sazid@gmail.com' }
   // { email: 'sazid@gmail.com', name: 'sazid' }
@@ -37,7 +43,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello For Query");
 });
 
-app.post("/", (req: Request, res: Response) => {
+app.post("/", logger, (req: Request, res: Response) => {
   // res.send("Got a POST request");
   console.log(req.body);
   // this will log undefined so we have to use parser
