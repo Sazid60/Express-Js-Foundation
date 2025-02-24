@@ -209,3 +209,58 @@ courseRouter.post("/create-course", (req: Request, res: Response) => {
 });
 // __________________________________________
 ```
+
+## Error Handling
+
+```ts
+// Understanding Of Error handling
+app.get("/", logger, async (req: Request, res: Response) => {
+  try {
+    res.send(something);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Failed to get Data",
+    });
+  }
+});
+```
+
+- If We want to modify express global error handler. If we want to handle the error from e centered area
+
+```ts
+app.get(
+  "/",
+  logger,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.send(something);
+    } catch (error) {
+      next(error);
+      //  this will directly pass the error to the global error handler
+      // console.log(error);
+      // res.status(400).json({
+      //   success: false,
+      //   message: "Failed to get Data",
+      // });
+    }
+  }
+);
+
+// global error handler
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(error);
+  if (error) {
+    res.status(400).json({
+      success: false,
+      message: "Failed to get Data",
+    });
+  }
+});
+```
+
+- if we want to custom made error if any wrong route is hit
+- This works like if it do not match any route the error is catches here.
+- It should be in last and on top of global error handler
+- // route like http://localhost:3000/dfdfdfdfdf
